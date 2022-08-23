@@ -1,8 +1,3 @@
-Table of Contents
-
-**JavaScript must be enabled in your browser to display the table of
-contents.**
-
 ## Conclusion
 
 Probabilistic methods give us the ability to perform calculations faster
@@ -58,5 +53,3 @@ unlock new possible insights, turn decision making into a quicker and
 more data-driven process, and enable new kinds of products to be built.
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT

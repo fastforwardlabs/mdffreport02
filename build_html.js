@@ -573,9 +573,9 @@ function makeJS() {
 // -- Report metadata to be updated by REs -- 
 // update Title, description, image url, content url, Google Analytics "UA" tag, and PDF name
 function makeHead() {
-  let title = 'Structural Time Series'
+  let title = 'Probabilistic Methods for Realtime Streams'
   let description =
-    'An online research report on structural time series by Cloudera Fast Forward.'
+    'An online research report on Probabilistic Methods for Realtime Streams by Cloudera Fast Forward.'
   return `<head>
 <meta charset="utf-8" />
 
@@ -615,6 +615,12 @@ ${makeJS()}
 
 </script>
 <!-- End Google Analytics -->
+
+<!-- MathJax -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- End MathJax -->
+
 </head>`
 }
 // end report metadata

@@ -1,8 +1,3 @@
-Table of Contents
-
-**JavaScript must be enabled in your browser to display the table of
-contents.**
-
 ## CliqueStream: Prototype
 
 The major proliferation of social networks into our communities offers a
@@ -72,7 +67,7 @@ the full dataset would constantly require more and more storage space.
 Our probabilistic implementation has bounded memory use — once enough
 subreddit and hashtag data comes in to fill the data structures with the
 minimum amount of data necessary (see
-<a href="#consider" class="doc_link">consider</a> for more discussion),
+<a href="#things-to-consider" class="doc_link">Things to Consider</a> for more discussion),
 the memory use stabilizes. In the case of our prototype this
 stabilization happens at 296.3 MB of memory and 147 MB of storage
 (including data snapshots for reloading the in-memory data). This is
@@ -127,7 +122,7 @@ Generally this is used to either filter the stream (by removing
 non-pertinent messages) or to augment it (by adding new fields).
 
 For example, in
-<a href="#FIG-pipeline" class="doc_link">FIG-pipeline</a> the <span
+<a href="#figure-2.-general-streaming-data-analysis-pipeline" class="doc_link">Figure 2. General streaming data analysis pipeline</a> the <span
 class="monospaced">cat\_extractor</span> analysis routine finds tweets
 relating to cats and filters them into their own stream (named the <span
 class="monospaced">cat\_stream</span>). Any other analysis routine can
@@ -182,9 +177,8 @@ For this particular prototype, we chose to have the code generating the
 data speak directly to the analysis plugins. However, for more
 complicated situations (e.g., when multiple different systems need
 access to the same stream of data), a messaging protocol should be used.
-NSQ <span class="footnote">  
-\[<http://nsq.io/>\]  
-</span> is a simple solution that does just that — data can be published
+NSQ ^[<http://nsq.io/>]
+is a simple solution that does just that — data can be published
 to different topics and consumers can subscribe to those topics in order
 to read the stream. These sorts of systems also help deal with fault
 tolerance by having guarantees on the delivery of each message.
@@ -276,9 +270,8 @@ two subreddits or hashtags share word usage while normalizing for
 particularly verbose communities.
 
 The implementation was done in GoLang and is called <span
-class="monospaced">gocountme</span>; <span class="footnote">  
-\[<http://github.com/mynameisfiber/gocountme>\]  
-</span> it provides a simple HTTP interface to manipulate probabilistic
+class="monospaced">gocountme</span> ^[<http://github.com/mynameisfiber/gocountme>]
+it provides a simple HTTP interface to manipulate probabilistic
 sets. This allows us to very simply add elements to a collection and
 then do various set operations on them. For example, we can easily add
 all users of a website and compare them in a language-agnostic way.
@@ -314,10 +307,8 @@ all users of a website and compare them in a language-agnostic way.
     }
 
 This system was engineered to optimize for throughput and availability
-by using Google’s <span class="monospaced">leveldb</span> <span
-class="footnote">  
-\[<https://github.com/google/leveldb>\]  
-</span> library. In addition, it supports writing customized queries
+by using Google’s <span class="monospaced">leveldb</span> ^[<https://github.com/google/leveldb>]
+library. In addition, it supports writing customized queries
 through a simple querying language in order to build up complicated
 statements that can easily be evaluated server-side.
 
@@ -341,7 +332,7 @@ for hundreds of thousands of items.
 
 In order to extract the keywords from a text, we use the hierarchical
 Bloom filter described in
-<a href="#composite" class="doc_link">composite</a>. This allows us to
+<a href="#composite-structures" class="doc_link">Composite Structures</a>. This allows us to
 find any of 10,000 keywords using only 56.7 KB of memory. Simply storing
 the keywords in a hash table for lookup would require 2192.8 KB;
 however, considerably more space would be required to efficiently search
@@ -350,10 +341,9 @@ done. Furthermore, the Bloom filter’s memory use is agnostic to the
 actual size of the keywords and only scales with the number of them.
 
 Once we have extracted the keyword data, we insert an association of
-subreddit/hashtag to keyword into a system called *forgettable*. <span
-class="footnote">  
-\[<http://github.com/mynameisfiber/forgettable>\]  
-</span> At first look, forgettable seems to simply be a database for
+subreddit/hashtag to keyword into a system called *forgettable*.
+^[<http://github.com/mynameisfiber/forgettable>]
+At first look, forgettable seems to simply be a database for
 categorical distributions — it can store the counts and probabilities of
 keyword mentions for each subreddit or hashtag. However, it uses a
 scheme borrowed from radioactive decay using Poisson processes in order
@@ -449,10 +439,9 @@ Using probabilistic methods, we are able to efficiently process large
 amounts of subreddit and Twitter trending topic data. Of course, with
 great amounts of data comes the responsibility to display it without
 completely overwhelming the viewer. After examining several methods of
-representation, we decided to use the JavaScript library D3.js <span
-class="footnote">  
-\[<http://d3js.org/>\]  
-</span> to create an interactive, force-directed graph that modeled the
+representation, we decided to use the JavaScript library D3.js 
+^[<http://d3js.org/>]
+to create an interactive, force-directed graph that modeled the
 subreddits and trending topics as nodes linked to each other by word use
 similarity.
 
@@ -463,11 +452,11 @@ tricky. To get a truly comprehensive view of the relationships between
 the 40 nodes we display by default in the prototype, we would need
 40-dimensional vision. We may someday get to that point (cybernetic
 implants?), but for now we’re forced to embed those relationships in the
-two dimensions of a computer screen. <span class="footnote">  
-\[Virtual reality systems may soon offer new opportunities for more
+two dimensions of a computer screen.
+^[Virtual reality systems may soon offer new opportunities for more
 immersive data visualizations, but we’ll still be short by 37
-dimensions.\]  
-</span>
+dimensions.]
+
 
 ![Subreddit word use similarity visualized using an adjacency
 matrix](figures/18.png)
@@ -475,9 +464,9 @@ matrix](figures/18.png)
 ##### Figure 4. Subreddit word use similarity visualized using an adjacency matrix
 
 One of the most comprehensive methods of display is the adjacency
-matrix. <span class="footnote">  
-\[<http://bost.ocks.org/mike/miserables/>\]  
-</span> This method satisfies the condition of showing the relationship
+matrix.
+^[<http://bost.ocks.org/mike/miserables/>]
+This method satisfies the condition of showing the relationship
 of each node to every other one, but it does so at the cost of easy or
 intuitive decipherability.
 
@@ -487,9 +476,9 @@ intuitive decipherability.
 
 A force-directed graph displays the same information, but it uses
 humankind’s inherent understanding of physical forces to build a more
-intuitive model of relationships. <span class="footnote">  
-\[<http://bl.ocks.org/mbostock/4062045>\]  
-</span> The D3.js force-directed layout includes a simplified but robust
+intuitive model of relationships.
+^[<http://bl.ocks.org/mbostock/4062045>]
+The D3.js force-directed layout includes a simplified but robust
 set of simulated forces based on charged particles and springs. Nodes
 are pulled toward each other by links according to the strength of their
 relationship. At the same time, nodes repel one another by a set force
@@ -705,5 +694,3 @@ these solutions and understanding how they will operate over time.
         this?
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT

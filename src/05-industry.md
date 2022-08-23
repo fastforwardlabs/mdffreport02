@@ -1,8 +1,3 @@
-Table of Contents
-
-**JavaScript must be enabled in your browser to display the table of
-contents.**
-
 ## State of the Industry
 
 There’s been significant growth in recent years in the number of
@@ -61,10 +56,8 @@ solution. It must also be deployed alongside other infrastructure (Storm
 only provides the stream management system), so it is not, by itself, a
 complete solution.
 
-Storm famously powers Twitter’s realtime analytics, <span
-class="footnote">  
-\[<http://analytics.twitter.com>\]  
-</span> and YieldBot has used Storm, alongside Apache Kafka (a
+Storm famously powers Twitter’s realtime analytics,^[<http://analytics.twitter.com>]
+and YieldBot has used Storm, alongside Apache Kafka (a
 distributed messaging system) and Apache Cassandra (a distributed
 database), for probabilistic ranking and trend analysis.
 
@@ -90,9 +83,8 @@ handling incoming data streams that feed into probabilistic systems.
 
 #### Streamtools
 
-Streamtools <span class="footnote">  
-\[<http://nytlabs.github.io/streamtools/>\]  
-</span> is a graphical tool for visually working with streams of data.
+Streamtools^[<http://nytlabs.github.io/streamtools/>]
+is a graphical tool for visually working with streams of data.
 It was developed in 2013 by the New York Times R&D Lab with the goal of
 enabling developers to easily work with streams of data.
 
@@ -104,9 +96,8 @@ create products or find insights on the available data.
 
 #### RethinkDB
 
-RethinkDB <span class="footnote">  
-\[<http://rethinkdb.com/blog/realtime-web/>\]  
-</span> is an emerging project we find fascinating enough to include in
+RethinkDB^[<http://rethinkdb.com/blog/realtime-web/>]
+is an emerging project we find fascinating enough to include in
 this report. It’s an open source distributed database with a built-in
 administrative interface and intuitive query language.
 
@@ -173,5 +164,3 @@ visual data flow editor in the IDE, as well as a web view.
 ##### Figure 3. A screenshot of the Oracle Event Processing interface
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT

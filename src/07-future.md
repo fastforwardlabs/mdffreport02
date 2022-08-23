@@ -1,8 +1,3 @@
-Table of Contents
-
-**JavaScript must be enabled in your browser to display the table of
-contents.**
-
 ## The Future
 
 Probabilistic methods are putting our current algorithms in a new
@@ -56,9 +51,9 @@ also users of a particular site feature, or how they compare to other
 users is extremely actionable information that can be used to greatly
 enhance user participation and the user experience. Furthermore, in a
 world where the vast majority of interaction with a new piece of content
-happens in the first 15 minutes, <span class="footnote">  
-\[<http://tinyurl.com/3o7zeds>\]  
-</span> we do not have time to do anything but a very fast realtime
+happens in the first 15 minutes,
+^[<http://tinyurl.com/3o7zeds>]
+we do not have time to do anything but a very fast realtime
 analysis — by the time a batch analysis is done it is already too late!
 
 Finally, probabilistic streaming methods provide a cultural paradigm
@@ -122,5 +117,3 @@ still able to derive insights that they are interested in by using the
 appropriate probabilistic algorithms.
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT

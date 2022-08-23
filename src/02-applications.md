@@ -1,8 +1,3 @@
-Table of Contents
-
-**JavaScript must be enabled in your browser to display the table of
-contents.**
-
 ## Applications
 
 Stream processing with probabilistic algorithms has a strong and quiet
@@ -46,7 +41,7 @@ time and is very likely to reflect the average temperature over the time
 the calculation has been running (this is called reservoir sampling).
 Another possible solution is to use a decaying distributional database
 (such as forgettable, described in
-<a href="#keywordusage" class="doc_link">keywordusage</a>) to maintain a
+<a href="#keyword-usage" class="doc_link">Keyword Usage</a>) to maintain a
 small representation of the current distribution of temperatures. In
 this way we can infer not only a view of the average, but also other
 higher-order statistics.
@@ -82,9 +77,8 @@ probabilistic techniques are being used today.
 
 Social networks see tons of data. This data is flowing in as a constant
 stream of timestamped updates. For example, there are approximately six
-thousand tweets posted to Twitter each second, <span class="footnote">  
-\[<http://bit.ly/1yKfYAT>\]  
-</span> and that number will probably continue to increase. Despite this
+thousand tweets posted to Twitter each second,^[<http://bit.ly/1yKfYAT>] and
+that number will probably continue to increase. Despite this
 volume of data, most networks offer a realtime view of the top
 discussion topics that are currently popular with users of the service.
 This is a tool for users to explore and discover the most interesting
@@ -97,11 +91,10 @@ and timely content.
 
 These calculations are not simply counts of words used or clicks on
 links. If that were the case, Justin Bieber and Kim Kardashian would top
-the lists all the time. <span class="footnote">  
-\[In 2010, updates about pop star Justin Bieber were believed to consume
-about 3% of Twitter’s server infrastructure
-(<http://mashable.com/2010/09/07/justin-bieber-twitter/>).\]  
-</span> Instead, as messages enter the system, they are broken up into
+the lists all thetime.
+^[In 2010, updates about pop star Justin Bieber were believed to consume
+ about 3% of Twitter’s server infrastructure \(<http://mashable.com/2010/09/07/justin-bieber-twitter/>\).]
+Instead, as messages enter the system, they are broken up into
 phrases of various lengths, called *n-grams*. These phrases are then
 monitored with a probabilistic calculation that represents the rate of
 mentions of the phrases.
@@ -181,9 +174,8 @@ with pointers to where you can find the full values.
 
 ##### Figure 6. A quick precaching mechanism reduces the number of requests to the bulky database
 
-For example, riak <span class="footnote">  
-\[<http://basho.com/riak/>\]  
-</span> will store a copy of the index in memory so that we know whether
+For example, riak ^[<http://basho.com/riak/>]
+will store a copy of the index in memory so that we know whether
 the data even exists and where it is stored. This type of scheme is
 necessary when we are dealing with potentially very high latency reads
 from the actual database on disk — if we have a very quick way of first
@@ -207,8 +199,8 @@ filter will return an incorrect result and say that it has seen an
 object before when it actually hasn’t (the converse can never happen — a
 bloom filter will never say it hasn’t seen an object when it really
 has). In addition, this error can be made incredibly low (in
-<a href="#memory_pd_wiki_comparison"
-class="doc_link">memory_pd_wiki_comparison</a> we’ll see that we can
+<a href="#example-12.-size-estimates-for-the-number-of-unique-words-in-wikipedia"
+class="doc_link">Example 12. Size estimates for the number of unique words in Wikipedia</a> we’ll see that we can
 store 4,956,262 unique keys with 0.14% error using only 11.5 MB).
 
 By using a bloom filter, we can very easily create a precache that
@@ -318,9 +310,8 @@ classification.
 Anomaly detection is another common application. Anomaly detection is
 akin to finding the needle in the haystack, while other applications
 that we’ve discussed are more like understanding the nature of the
-haystack <span class="footnote">  
-\[Thanks to Gary King for this analogy (<http://bit.ly/1zxaQit>)\]  
-</span> Furthermore, we want to be able to not only find the needle, but
+haystack.^[Thanks to Gary King for this analogy (<http://bit.ly/1zxaQit>)]
+Furthermore, we want to be able to not only find the needle, but
 predict when we will next see it and what other haystacks will contain
 similar needles. In finance, for example, it is critical to be able to
 find, track, and predict any sort of possible anomalous situation.
@@ -385,5 +376,3 @@ and in terms of the number of samples needed) detect port scans with a
 very low incidence of false negatives.
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT

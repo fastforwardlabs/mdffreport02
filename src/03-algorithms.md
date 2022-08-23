@@ -1,8 +1,3 @@
-Table of Contents
-
-**JavaScript must be enabled in your browser to display the table of
-contents.**
-
 ## Algorithms
 
 In this section we present a technical introduction to stream analysis
@@ -55,7 +50,7 @@ notation. In this notation we describe how many operations, in general,
 the algorithm must perform for an input of length <span
 class="monospaced">N</span>. For example, if our algorithm is <span
 class="monospaced">O(N)</span>, if we double the amount of data then we
-double the amount of work that must be done. For latexmath:<span
+double the amount of work that must be done. For <span
 class="monospaced">O(N^2)</span>, a doubling of the data is a
 quadrupling of the amount of work needed. Ideally an algorithm is <span
 class="monospaced">O(1)</span>, which means the algorithm does not
@@ -155,10 +150,9 @@ A common remedy for this is to only look at data from a fixed time
 window (for example, only using the past week’s worth of data). However,
 this is simply a band-aid for the problem: the algorithm will still do
 just as poorly if the amount of data seen per day or the complexity of
-the data increases. <span class="footnote">  
-\[The complexity might increase, for example, if the number of edges in
-the graph being analyzed increases.\]  
-</span> Furthermore, these sorts of constraints to the input dataset are
+the data increases.^[The complexity might increase, for example, if the number of edges in
+the graph being analyzed increases.]
+Furthermore, these sorts of constraints to the input dataset are
 often motivated simply by the resource usage of the algorithm and not
 the actual desired insights from the results, which can result in
 confusion or simply making the data useless. Most importantly, however,
@@ -167,9 +161,8 @@ if you were to group your data into hour long groupings, what would
 happen if you shifted the groups by 30min? How would your insights
 change if the grouping were changed to 1min instead? This problem stems
 from the fact that these sorts of models have no optimal value for the
-number or size of the groupings <span class="footnote">  
-\[<http://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width>\]  
-</span> yet the results are completely dependant on this choice.
+number or size of the groupings^[<http://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width>]
+yet the results are completely dependent on this choice.
 
 ### Probabilistic Data Structures
 
@@ -236,15 +229,13 @@ do the number of values further away from the center point. Error rates
 for probabilistic data structures are framed this way because all the
 analyses around them are probabilistic. So, for example, when we say
 that the HyperLogLog algorithm has an error of err =
-\frac{1.04}{\sqrt{m}} we mean that 66% of the time the error will be
+\\( \frac{1.04}{\sqrt{m}} \\) we mean that 66% of the time the error will be
 smaller than <span class="monospaced">err</span>, 95% of the time it
 will be below <span class="monospaced">2\*err</span>, and 99.7% of the
-time it will be below <span class="monospaced">3\*err</span>. <span
-class="footnote">  
-\[These numbers come from the 66-95-99 rule of Gaussian distributions.
+time it will be below <span class="monospaced">3\*err</span>. 
+^[These numbers come from the 66-95-99 rule of Gaussian distributions.
 More information can be found at
-<http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule>.\]  
-</span>
+<http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule>.]
 
 #### Very Approximate Counting with a 1-byte Morris Counter
 
@@ -256,7 +247,7 @@ understanding large data streams, and problems in AI like image and
 speech recognition.
 
 The Morris counter keeps track of an exponent and models the counted
-state as 2^{exponent} (rather than a correct count) — it provides an
+state as \\( 2^{exponent} \\) (rather than a correct count) — it provides an
 order of magnitude estimate. This estimate is updated using a
 probabilistic rule.
 
@@ -281,53 +272,17 @@ of the first exponents.
 
 ##### Table 1. Morris counter details
 
-exponent
 
-pow(2,exponent)
+| exponent | pow(2,exponent) | P(increment) |
+|----------|-----------------|--------------|
+| 0        | 1               | 1            |
+| 1        | 2               | 0.5          |
+| 2        | 4               | 0.25         |
+| 3        | 8               | 0.125        |
+| 4        | 16              | 0.0625       |
+| ...      | ...             | ...          |
+| 254      | 2.894802e+76    | 3.454467e-77 |
 
-P(increment)
-
-0
-
-1
-
-1
-
-1
-
-2
-
-0.5
-
-2
-
-4
-
-0.25
-
-3
-
-8
-
-0.125
-
-4
-
-16
-
-0.0625
-
-…
-
-…
-
-…
-
-254
-
-2.894802e+76
-
-3.454467e-77
 
 The maximum we could approximately count where we use a single unsigned
 byte for the exponent is <span class="monospaced">math.pow(2,255) ==
@@ -356,14 +311,12 @@ done.
             return 2**self.counter
 
 Using the example implementation in
-<a href="#memory_morris_example_code"
-class="doc_link">memory_morris_example_code</a>, we can see that the
+<a href="#example-2.-simple-morris-counter-implementation"
+class="doc_link">Example 2. Simple Morris counter implementation</a>, we can see that the
 first request to increment the counter succeeds and the second fails.
-<span class="footnote">  
-\[A more fully fleshed out implementation that uses an <span
+^[A more fully fleshed out implementation that uses an <span
 class="monospaced">array</span> of bytes to make many counters is
-available at <https://github.com/ianozsvald/morris_counter>."\]  
-</span>
+available at <https://github.com/ianozsvald/morris_counter>."]
 
 ##### Example 3. Morris counter library example
 
@@ -378,13 +331,12 @@ available at <https://github.com/ianozsvald/morris_counter>."\]
     2.0
 
 In
-<a href="#FIG-morris-counter" class="doc_link">FIG-morris-counter</a>,
+<a href="#figure-1.-three-1-byte-morris-counters-vs.-an-8-byte-integer" class="doc_link">Figure 1. Three 1-byte Morris counters vs. an 8-byte integer</a>,
 the thick black line shows a normal integer incrementing on each
-iteration. On a 64-bit computer this is an 8-byte integer. <span
-class="footnote">  
-\[More information about the error behavior can be seen at
-<http://geomblog.blogspot.co.uk/2011/06/bob-morris-and-stream-algorithms.html>.\]  
-</span> The evolution of three 1-byte Morris counters is shown as dotted
+iteration. On a 64-bit computer this is an 8-byte integer. 
+^[More information about the error behavior can be seen at
+<http://geomblog.blogspot.co.uk/2011/06/bob-morris-and-stream-algorithms.html>.]
+The evolution of three 1-byte Morris counters is shown as dotted
 lines: the y-axis shows their values, which approximately represent the
 true count for each iteration. Three counters are shown to give you an
 idea about their different trajectories and the overall trend; the three
@@ -431,19 +383,20 @@ Suppose we took 100 items and stored the hashes of those values (the
 hashes being numbers from 0-1). Knowing the spacing is even means that
 instead of saying, "We have 100 items," we could say, "We have a
 distance of 0.01 between every item." This is where the K-Min Values
-algorithm <span class="footnote">  
-\[Beyer, K., Haas, P. J., Reinwald, B., Sismanis, Y., and Gemulla, R.
+algorithm 
+^[Beyer, K., Haas, P. J., Reinwald, B., Sismanis, Y., and Gemulla, R.
 "On synopses for distinct-value estimation under multiset operations."
 *Proceedings of the 2007 ACM SIGMOD International Conference on
 Management of Data - SIGMOD ’07* (2007): 199-210.
-doi:10.1145/1247480.1247504.\]  
-</span> finally comes in — if we keep the <span
+doi:10.1145/1247480.1247504.]
+finally comes in — if we keep the <span
 class="monospaced">k</span> smallest unique hash values we have seen, we
 can approximate the overall spacing between hash values and infer what
 the total number of items is.
 
-In <a href="#FIG-kmv-hash-density"
-class="doc_link">FIG-kmv-hash-density</a> we can see the state of a
+In <a href="#figure-2.-the-values-stored-in-a-k-min-values-structure-as-more-elements-are-added"
+class="doc_link">Figure 2. The values stored in a K-Min Values structure as more elements are added</a>
+we can see the state of a
 K-Min Values structure (also called a KMV) as more and more items are
 added. At first, since we don’t have many hash values, the largest hash
 we have kept is quite large. As we add more and more, the largest of the
@@ -511,12 +464,11 @@ structures in this section except for the Morris counter.
             return (self.num_hashes - 1) * (2**32-1) / float(self.data[-2] + 2**31 - 1)
 
 Using the <span class="monospaced">KMinValues</span> implementation in
-the Python package <span class="monospaced">CountMeMaybe</span>, <span
-class="footnote">  
-\[<https://github.com/mynameisfiber/countmemaybe>\]  
-</span> we can begin to see the utility of this data structure. This
+the Python package <span class="monospaced">CountMeMaybe</span>,
+^[<https://github.com/mynameisfiber/countmemaybe>]
+we can begin to see the utility of this data structure. This
 implementation is very similar to the one in
-<a href="#memory_simple_kmv" class="doc_link">memory_simple_kmv</a>, but
+<a href="#example-4.-simple-kminvalues-implementation" class="doc_link">Example 4. Simple KMinValues implementation</a>, but
 it fully implements the other set operations, such as union and
 intersection. Also note that "size" and "cardinality" are used
 interchangeably (the word "cardinality" is from set theory and is used
@@ -572,11 +524,11 @@ a particular user within a certain amount of time.
 
 Sometimes we need to be able to do other types of set operations, for
 which we need to introduce new types of probabilistic data structures.
-Bloom filters <span class="footnote">  
-\[Bloom, B. H. "Space/time trade-offs in hash coding with allowable
+Bloom filters
+^[Bloom, B. H. "Space/time trade-offs in hash coding with allowable
 errors." *Communications of the ACM* 13:7 (1970): 422-426.
-doi:10.1145/362686.362692.\]  
-</span> were created to answer the question of whether we’ve seen an
+doi:10.1145/362686.362692.]
+were created to answer the question of whether we’ve seen an
 item before.
 
 Bloom filters work by having multiple hash values in order to represent
@@ -625,15 +577,16 @@ functions).
 The exact length of the <span class="monospaced">bool</span> list and
 the number of hash values per item we need will be fixed based on the
 capacity and the error rate we require. With some reasonably simple
-statistical arguments <span class="footnote">  
-\[The Wikipedia page on Bloom filters has a very simple proof for the
+statistical arguments
+^[The Wikipedia page on Bloom filters has a very simple proof for the
 properties of a Bloom filter; see
-<http://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives>.\]  
-</span> we see that the ideal values are:
+<http://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives>.]
+we see that the ideal values are:
 
-\begin{array}{rcl} num\\\_bits & = & -capacity \cdot
-\frac{log(error)}{log(2)^2} \\\\ num\\\_hashes & = & num\_bits \cdot
-\frac{log(2)}{capacity} \end{array}
+\begin{array}
+{rcl} num\\\_bits & = & -capacity \cdot \frac{log(error)}{log(2)^2} \\\\
+num\\\_hashes & = & num\\\_bits \cdot \frac{log(2)}{capacity}
+\end{array}
 
 That is to say, if we wish to store 50,000 objects (no matter how big
 the objects themselves are) at a false positive rate of 0.05% (that is
@@ -699,29 +652,29 @@ are dealing with a set of data whose size is unknown (for example, a
 stream of data).
 
 One way of dealing with this is to use a variant of Bloom filters called
-*scalable Bloom filters*. <span class="footnote">  
-\[Almeida, P. S., Baquero, C., Preguiça, N., and Hutchison, D. "Scalable
+*scalable Bloom filters*.
+^[Almeida, P. S., Baquero, C., Preguiça, N., and Hutchison, D. "Scalable
 Bloom Filters." *Information Processing Letters* 101 (2007): 255–261.
-doi:10.1016/j.ipl.2006.10.007.\]  
-</span> They work by chaining together multiple Bloom filters whose
-error rates vary in a specific way. <span class="footnote">  
-\[The error values actually decrease like the geometric series. This
+doi:10.1016/j.ipl.2006.10.007.]
+They work by chaining together multiple Bloom filters whose
+error rates vary in a specific way.
+^[The error values actually decrease like the geometric series. This
 way, when you take the product of all the error rates it approaches the
-desired error rate.\]  
-</span> By doing this, we can guarantee an overall error rate and simply
+desired error rate.]
+By doing this, we can guarantee an overall error rate and simply
 add a new Bloom filter when we need more capacity. In order to check if
 we’ve seen an item before, we simply iterate over all of the sub-Blooms
 until either we find the object or we exhaust the list. A sample
 implementation of this structure can be seen in
-<a href="#memory_scaling_bloom"
-class="doc_link">memory_scaling_bloom</a>, where we use the previous
+<a href="#example-6.-simple-scaling-bloom-filter-implementation"
+class="doc_link">Example 6. Simple scaling Bloom filter implementation</a>, where we use the previous
 Bloom filter implementation for the underlying functionality and have a
 counter to simplify knowing when to add a new Bloom.
 
 Another way of dealing with this is using a method called timing Bloom
-filters. <span class="footnote">  
-\[<http://github.com/mynameisfiber/fuggetaboutit>\]  
-</span> This variant allows elements to be expired out of the data
+filters.
+^[<http://github.com/mynameisfiber/fuggetaboutit>]
+This variant allows elements to be expired out of the data
 structure, thus freeing up space for more elements. This is especially
 nice for dealing with streams, since we can have elements expire after,
 say, an hour and have the capacity be large enough to deal with the
@@ -877,16 +830,16 @@ on different geographic combinations. In general, LogLog-type algorithms
 are very versatile, and there are even adaptations that can temporally
 window your data.
 
-LogLog-type counters <span class="footnote">  
-\[<http://algo.inria.fr/flajolet/Publications/DuFl03-LNCS.pdf>\]  
-</span> are based on the realization that the individual bits of a hash
+LogLog-type counters
+^[<http://algo.inria.fr/flajolet/Publications/DuFl03-LNCS.pdf>]
+are based on the realization that the individual bits of a hash
 function can also be considered to be random. That is to say, the
 probability of the first bit of a hash being <span
 class="monospaced">1</span> is 50%, the probability of the first two
 bits being <span class="monospaced">01</span> is 25%, and the
 probability of the first three bits being <span
 class="monospaced">001</span> is 12.5%. Knowing these probabilities, and
-keeping the hash with the most \`0\`s at the beginning (i.e., the least
+keeping the hash with the most 0s at the beginning (i.e., the least
 probable hash value), we can come up with an estimate of how many items
 we’ve seen so far.
 
@@ -979,10 +932,10 @@ have 28 bits left (corresponding to 28 individual coin flips per coin
 flipper), meaning each counter can only count up to <span
 class="monospaced">2^28 = 268,435,456</span>. In addition, there is a
 constant (alpha) that depends on the number of flippers there are, which
-normalizes the estimation. <span class="footnote">  
-\[A full description of the basic LogLog and SuperLogLog algorithms can
-be found at <http://algo.inria.fr/flajolet/Publications/DuFl03.pdf>.\]  
-</span> All of this together gives us an algorithm with 1.05 / \sqrt(m)
+normalizes the estimation.
+^[A full description of the basic LogLog and SuperLogLog algorithms can
+be found at <http://algo.inria.fr/flajolet/Publications/DuFl03.pdf>.]
+All of this together gives us an algorithm with \\( \frac{1.05}{\sqrt{m}} \\)
 accuracy, where *m* is the number of registers (or flippers) used.
 
 ##### Example 8. Simple implementation of LogLog
@@ -1012,33 +965,33 @@ averaging the estimates from all of the individual LogLog registers.
 This, however, is not the most efficient way to combine the data! This
 is because we may get some unfortunate hash values that make one
 particular register spike up while the others are still at low values.
-Because of this, we are only able to achieve an error rate of
-O(\frac{1.30}{\sqrt{m}}), where *m* is the number of registers used.
+Because of this, we are only able to achieve an error rate of \\( O \( \frac{1.30}{\sqrt{m}} \) \\),
+where *m* is the number of registers used.
 
-SuperLogLog <span class="footnote">  
-\[Durand, M., and Flajolet, P. "LogLog Counting of Large Cardinalities."
+SuperLogLog
+^[Durand, M., and Flajolet, P. "LogLog Counting of Large Cardinalities."
 *Proceedings of ESA*, 2832 (2003): 605-617.
-doi:10.1007/978-3-540-39658-1\_55.\]  
-</span> was devised as a fix to this problem. With this algorithm, only
+doi:10.1007/978-3-540-39658-1\_55.]
+was devised as a fix to this problem. With this algorithm, only
 the lowest 70% of the registers were used for the size estimate, and
 their value was limited by a maximum value given by a restriction rule.
-This addition decreased the error rate to O(\frac{1.05}{\sqrt{m}}). This
+This addition decreased the error rate to \\( O(\frac{1.05}{\sqrt{m}}) \\). This
 was counterintuitive, since we got a better estimate by disregarding
 information!
 
-Finally, HyperLogLog <span class="footnote">  
-\[Flajolet, P., Fusy, É, Gandouet, O., et al. "HyperLogLog: The analysis
+Finally, HyperLogLog
+^[Flajolet, P., Fusy, É, Gandouet, O., et al. "HyperLogLog: The analysis
 of a near-optimal cardinality estimation algorithm." *Proceedings of the
-International Conference on Analysis of Algorithms* (2007): 127–146.\]  
-</span> came out in 2007 and gave us further accuracy gains. This was
+International Conference on Analysis of Algorithms* (2007): 127–146.]
+came out in 2007 and gave us further accuracy gains. This was
 done simply by changing the method of averaging the individual
 registers: instead of simply averaging, we use a spherical averaging
-scheme <span class="footnote">  
-\[Spherical averaging is simply a more complicated statistical measure
-that relates to the normal average.\]  
-</span> that also has special considerations for different edge cases
+scheme
+^[Spherical averaging is simply a more complicated statistical measure
+that relates to the normal average.]
+that also has special considerations for different edge cases
 the structure could be in. This brings us to the current best error rate
-of O(\frac{1.04}{\sqrt{m}}). In addition, this formulation removes a
+of \\( O(\frac{1.04}{\sqrt{m}}) \\). In addition, this formulation removes a
 sorting operation that is necessary with SuperLogLog. This can greatly
 speed up the performance of the data structure when trying to insert
 items at a high volume.
@@ -1162,8 +1115,8 @@ under a millisecond on commodity hardware.
 
 For a better understanding of the data structures, we first created a
 dataset with many unique keys, and then one with duplicate entries.
-<a href="#FIG-prob-ds-comparison"
-class="doc_link">FIG-prob-ds-comparison</a> shows the results when we
+<a href="#example-10.-comparison-between-various-probabilistic-data-structures-for-unique-(above)-and-repeating-(below)-data"
+class="doc_link">Example 10. Comparison between various probabilistic data structures for unique (above) and repeating (below) data</a> shows the results when we
 feed these keys into the data structures we’ve just looked at and
 periodically query, "How many unique entries have there been?"
 
@@ -1188,8 +1141,8 @@ directly correlated with the error guarantees, so this makes sense.
 Looking just at the probabilistic data structures that have the best
 performance (and really, the ones you will probably use), we can
 summarize their utility and their approximate memory usage (see
-<a href="#memory_pd_comparison"
-class="doc_link">memory_pd_comparison</a>). We can see a huge change in
+<a href="#example-11.-comparison-of-major-probabilistic-data-structures"
+class="doc_link">Example 11. Comparison of major probabilistic data structures</a>). We can see a huge change in
 memory usage depending on the questions we care to ask. This simply
 highlights the fact that when using a probabilistic data structure, you
 must first consider what questions you really need to answer about the
@@ -1199,70 +1152,12 @@ sizes are *only* dependent on the error rate.
 
 ##### Example 11. Comparison of major probabilistic data structures
 
-<table class="tableblock frame-topbot grid-all" style="
-width:100%;
-">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th class="tableblock halign-left valign-top"></th>
-<th class="tableblock halign-left valign-top">Size</th>
-<th class="tableblock halign-left valign-top">Union <span
-class="footnote"><br />
-[Union operations occur without increasing the error rate.]<br />
-</span></th>
-<th class="tableblock halign-left valign-top">Intersection</th>
-<th class="tableblock halign-left valign-top">Contains</th>
-<th class="tableblock halign-left valign-top">Size <span
-class="footnote"><br />
-[Size of data structure with 0.05% error rate, 100,000,000 unique
-elements, and using a 64-bit hashing function.]<br />
-</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tableblock halign-left valign-top"><p>HyperLogLog</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes
-(O(\frac{1.04}{\sqrt{m}}))</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes</p></td>
-<td class="tableblock halign-left valign-top"><p>No <span
-id="_footnote_memory_caveat" class="footnote"><br />
-[These operations <em>can</em> be done]<br />
-</span></p></td>
-<td class="tableblock halign-left valign-top"><p>No</p></td>
-<td class="tableblock halign-left valign-top"><p>2.704 MB</p></td>
-</tr>
-<tr class="even">
-<td class="tableblock halign-left valign-top"><p>K-Min Values</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes
-(O(\sqrt{\frac{2}{\pi(m-2)}}))</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes</p></td>
-<td class="tableblock halign-left valign-top"><p>No</p></td>
-<td class="tableblock halign-left valign-top"><p>20.372 MB</p></td>
-</tr>
-<tr class="odd">
-<td class="tableblock halign-left valign-top"><p>Bloom filter</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes
-(O(\frac{0.78}{\sqrt{m}}))</p></td>
-<td class="tableblock halign-left valign-top"><p>Yes</p></td>
-<td class="tableblock halign-left valign-top"><p>No <span
-class="footnoteref"><br />
-<a href="#_footnote_memory_caveat">[memory_caveat]</a><br />
-</span></p></td>
-<td class="tableblock halign-left valign-top"><p>Yes</p></td>
-<td class="tableblock halign-left valign-top"><p>197.8 MB</p></td>
-</tr>
-</tbody>
-</table>
+|   | Size | Union ^[Union operations occur without increasing the error rate.] | Intersection                                                              | Contains | Size ^[Size of data structure with 0.05% error rate, 100,000,000 unique elements, and using a 64-bit hashing function.] |
+|---|---   |--------------------------------------------------------------------|---------------------------------------------------------------------------| ---   |-------------------------------------------------------------------------------------------------------------------------|
+| HyperLogLog | Yes ( \\( O(\frac{1.04}{\sqrt{m}}) \\) ) | Yes | No ^[These operations <em>can</em> be done]                               | No | 2.704 MB                                                                                                                |
+| K-Min Values | Yes ( \\( O(\sqrt{\frac{2}{\pi(m-2)}}) \\) ) | Yes | Yes                                                                       | No | 20.372 MB |
+| Bloom filter | Yes ( \\( O(\frac{0.78}{\sqrt{m}}) \\) ) | Yes | No <sup class="footnote-ref"><a href="#fn25" id="fnref25">[25]</a></sup>  | Yes | 197.8 MB |
+
 
 As another, more realistic test, we chose to use a dataset derived from
 the text a partial dump of Wikipedia. This set contains 8,545,076 unique
@@ -1271,117 +1166,24 @@ on disk. We ran a very simple script in order to extract all single-word
 tokens with five or more characters from the dataset and store them in a
 newline-separated file. The question then was, "How many unique tokens
 are there?" The results can be seen in
-<a href="#memory_pd_wiki_comparison"
-class="doc_link">memory_pd_wiki_comparison</a>. In addition, we
+<a href="#example-12.-size-estimates-for-the-number-of-unique-words-in-wikipedia"
+class="doc_link">Example 12. Size estimates for the number of unique words in Wikipedia</a>. In addition, we
 attempted to answer the same question using a trie structure (this trie
 was chosen as opposed to the others because it offers good compression
 while still being robust enough to deal with the entire dataset).
 
 ##### Example 12. Size estimates for the number of unique words in Wikipedia
 
-<table class="tableblock frame-topbot grid-all" style="
-width:100%;
-">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th class="tableblock halign-left valign-top"></th>
-<th class="tableblock halign-left valign-top">Elements</th>
-<th class="tableblock halign-left valign-top">Relative error</th>
-<th class="tableblock halign-left valign-top">Processing time <span
-class="footnote"><br />
-[Processing time has been adjusted to remove the time required to read
-the dataset from disk. We also use the simple implementations provided
-earlier for testing.]<br />
-</span></th>
-<th class="tableblock halign-left valign-top">Structure size <span
-class="footnote"><br />
-[Structure size is theoretical given the amount of data since the
-implementations used were not optimized.]<br />
-</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tableblock halign-left valign-top"><p>Morris counter <span
-class="footnote"><br />
-[Since the Morris counter doesn’t deduplicate input, the size and
-relative error are given with regard to the total number of
-values.]<br />
-</span></p></td>
-<td class="tableblock halign-left valign-top"><p>1,073,741,824</p></td>
-<td class="tableblock halign-left valign-top"><p>6.52%</p></td>
-<td class="tableblock halign-left valign-top"><p>751s</p></td>
-<td class="tableblock halign-left valign-top"><p>5 bits</p></td>
-</tr>
-<tr class="even">
-<td class="tableblock halign-left valign-top"><p>LogLog
-register</p></td>
-<td class="tableblock halign-left valign-top"><p>1,048,576</p></td>
-<td class="tableblock halign-left valign-top"><p>78.84%</p></td>
-<td class="tableblock halign-left valign-top"><p>1,690 s</p></td>
-<td class="tableblock halign-left valign-top"><p>5 bits</p></td>
-</tr>
-<tr class="odd">
-<td class="tableblock halign-left valign-top"><p>LogLog</p></td>
-<td class="tableblock halign-left valign-top"><p>4,522,232</p></td>
-<td class="tableblock halign-left valign-top"><p>8.76%</p></td>
-<td class="tableblock halign-left valign-top"><p>2,112 s</p></td>
-<td class="tableblock halign-left valign-top"><p>41 KB</p></td>
-</tr>
-<tr class="even">
-<td class="tableblock halign-left valign-top"><p>HyperLogLog</p></td>
-<td class="tableblock halign-left valign-top"><p>4,983,171</p></td>
-<td class="tableblock halign-left valign-top"><p>-0.54%</p></td>
-<td class="tableblock halign-left valign-top"><p>2,907 s</p></td>
-<td class="tableblock halign-left valign-top"><p>40 KB</p></td>
-</tr>
-<tr class="odd">
-<td class="tableblock halign-left valign-top"><p>K-Min Values</p></td>
-<td class="tableblock halign-left valign-top"><p>4,912,818</p></td>
-<td class="tableblock halign-left valign-top"><p>0.88%</p></td>
-<td class="tableblock halign-left valign-top"><p>3,503 s</p></td>
-<td class="tableblock halign-left valign-top"><p>256 KB</p></td>
-</tr>
-<tr class="even">
-<td class="tableblock halign-left valign-top"><p>Scaling Bloom</p></td>
-<td class="tableblock halign-left valign-top"><p>4,949,358</p></td>
-<td class="tableblock halign-left valign-top"><p>0.14%</p></td>
-<td class="tableblock halign-left valign-top"><p>10,392 s</p></td>
-<td class="tableblock halign-left valign-top"><p>11,509 KB</p></td>
-</tr>
-<tr class="odd">
-<td class="tableblock halign-left valign-top"><p>Datrie</p></td>
-<td class="tableblock halign-left valign-top"><p>4,505,514 <span
-class="footnote"><br />
-[Because of some encoding problems, the datrie could not load all the
-keys.]<br />
-</span></p></td>
-<td class="tableblock halign-left valign-top"><p>0.00%</p></td>
-<td class="tableblock halign-left valign-top"><p>14,620 s</p></td>
-<td class="tableblock halign-left valign-top"><p>114,068 KB</p></td>
-</tr>
-</tbody><tfoot>
-<tr class="even">
-<td class="tableblock halign-left valign-top"><p>True value</p></td>
-<td class="tableblock halign-left valign-top"><p>4,956,262</p></td>
-<td class="tableblock halign-left valign-top"><p>0.00%</p></td>
-<td class="tableblock halign-left valign-top"><p>-----</p></td>
-<td class="tableblock halign-left valign-top"><p>49,558 KB <span
-class="footnote"><br />
-[The dataset is 49,558 KB considering only unique tokens, or 8.742 GB
-with all tokens.]<br />
-</span></p></td>
-</tr>
-</tfoot>
-
-</table>
+|                                                                                                                                                        | Elements                                                                                | 	Relative error | 	Processing time ^[Processing time has been adjusted to remove the time required to read the dataset from disk. We also use the simple implementations provided earlier for testing.] | Structure size ^[Structure size is theoretical given the amount of data since the implementations used were not optimized.] |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Morris counter ^[Since the Morris counter doesn’t deduplicate input, the size and relative error are given with regard to the total number of values.] | 1,073,741,824                                                                           | 6.52%           | 751s                                                                                                                                                                                  | 5 bits                                                                                                                      |
+| LogLog register                                                                                                                                        | 1,048,576                                                                               | 78.84%          | 1,690 s                                                                                                                                                                               | 5 bit                                                                                                                       |
+| LogLog                                                                                                                                                 | 4,522,232                                                                               | 8.76%           | 2,112 s                                                                                                                                                                               | 41 KB                                                                                                                       |
+| HyperLogLog                                                                                                                                            | 4,983,171                                                                               | -0.54%          | 2,907 s                                                                                                                                                                               | 40 KB                                                                                                                       |
+| K-Min Values                                                                                                                                           | 4,912,818                                                                               | 0.88%           | 3,503 s                                                                                                                                                                               | 256 KB                                                                                                                      |
+| Scaling Bloom                                                                                                                                          | 4,949,358                                                                               | 0.14%           | 10,392 s                                                                                                                                                                              | 11,509 KB                                                                                                                   |
+| Datrie                                                                                                                                                 | 4,505,514 ^[Because of some encoding problems, the datrie could not load all the keys.] | 0.00%           | 14,620 s                                                                                                                                                                              | 114,068 KB                                                                                                                  |
+| True value                                                                                                                                             | 4,956,262                                                                               | 0.00%           | -----                                                                                                                                                                                 | 49,558 KB ^[The dataset is 49,558 KB considering only unique tokens, or 8.742 GB with all tokens.]                          |
 
 The major takeaway from this experiment is that if you are able to
 specialize your code, you can get amazing speed and memory gains.
@@ -1391,8 +1193,8 @@ questions with given error bounds. By only having to deal with a subset
 of the information given, not only can we make the memory footprint much
 smaller, but we can also perform most operations over the structure
 faster (as can be seen with the insertion time into the datrie in
-<a href="#memory_pd_wiki_comparison"
-class="doc_link">memory_pd_wiki_comparison</a> being larger than with
+<a href="#example-12.-size-estimates-for-the-number-of-unique-words-in-wikipedia"
+class="doc_link">Example 12. Size estimates for the number of unique words in Wikipedia</a> being larger than with
 any of the probabilistic data structures).
 
 As a result, whether or not you use probabilistic data structures, you
@@ -1404,5 +1206,3 @@ database index over another, or maybe even using a probabilistic data
 structure to throw out all but the relevant data!
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT

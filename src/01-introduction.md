@@ -1,6 +1,6 @@
 ## Introduction
 
-Since the days of analog computers built on cams and gears,^[https://www.youtube.com/watch?v=_8aH-M3PzM0]
+Since the days of analog computers built on cams and gears,^[<https://www.youtube.com/watch?v=_8aH-M3PzM0>]
 we’ve been engineering systems around the flow of data and the
 critical calculations we must perform.
 
@@ -98,5 +98,3 @@ an algorithm, the algorithm itself is moved to the data source to answer
 questions as they are asked.
 
 ------------------------------------------------------------------------
-
-Last updated 2022-08-22 08:56:03 PDT
