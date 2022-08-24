@@ -584,7 +584,7 @@ function makeHead() {
 
 <meta property="og:title" content="${title}" /> 
 <meta property="og:description" content="${description}" />
-<meta property="og:image" content="https://probabilistic-methods.fastforwardlabs.com/figures/ff02.gif" />
+<meta property="og:image" content="https://probabilistic-methods.fastforwardlabs.com/figures/ff02-splash.png" />
 <meta property="og:url" content="https://probabilistic-methods.fastforwardlabs.com" />
 <meta name="twitter:card" content="summary_large_image" />
 
